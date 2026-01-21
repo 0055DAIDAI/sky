@@ -1,5 +1,6 @@
 server:
-  port: 8080
+  port: 10086
+
 
 spring:
   profiles:
@@ -7,11 +8,10 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-    druid:
-      driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: ${sky.datasource.username}
-      password: ${sky.datasource.password}
+    url: jdbc:mysql://localhost:3306/sky
+    username: root
+    password: 0055xslLCLxingchen
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
   #mapper配置文件

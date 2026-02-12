@@ -4,10 +4,15 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
+import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
+import com.aliyun.oss.model.Bucket;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +24,14 @@ public class AliOssUtil {
     private String accessKeySecret;
     private String bucketName;
 
+
+    @PostConstruct
+    public void logActualAK() {
+        if (accessKeyId != null && accessKeyId.length() > 8) {
+            String masked = accessKeyId.substring(0, 4) + "****" + accessKeyId.substring(accessKeyId.length() - 4);
+            log.warn("【实际加载的 OSS AK】: {}", masked);
+        }
+    }
     /**
      * 文件上传
      *
@@ -29,8 +42,7 @@ public class AliOssUtil {
     public String upload(byte[] bytes, String objectName) {
 
         // 创建OSSClient实例。
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
+        OSS ossClient = new OSSClientBuilder().build(endpoint,accessKeyId,accessKeySecret);
         try {
             // 创建PutObject请求。
             ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(bytes));

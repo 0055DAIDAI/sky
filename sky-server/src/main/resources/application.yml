@@ -12,6 +12,11 @@ spring:
     username: root
     password: 0055xslLCLxingchen
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    password: ${sky.redis.password}
+    database: ${sky.redis.database}
 
 mybatis:
   #mapper配置文件

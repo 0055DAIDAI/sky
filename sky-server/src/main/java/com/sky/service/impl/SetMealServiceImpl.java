@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -83,5 +84,26 @@ public class SetMealServiceImpl implements SetMealService {
         setmealDTO.setStatus(status);
         setmealDTO.setId(id);
         setMealMapper.update(setmealDTO);
+    }
+
+    @Override
+    public List<SetmealVO> getListByCategoryId(Long categoryId) {
+        // 查询启用状态的套餐
+        SetmealPageQueryDTO queryDTO = new SetmealPageQueryDTO();
+        queryDTO.setCategoryId(Math.toIntExact(categoryId));
+        queryDTO.setStatus(1); // 1表示启用状态
+
+        PageHelper.startPage(1, 100); // 设置一个较大的pagesize确保能获取所有数据
+        Page<SetMealPageVo> pageResult = setMealMapper.page(queryDTO);
+
+        // 转换为SetmealVO列表
+        List<SetmealVO> result = new ArrayList<>();
+        for (SetMealPageVo pageVo : pageResult.getResult()) {
+            SetmealVO vo = new SetmealVO();
+            BeanUtils.copyProperties(pageVo, vo);
+            result.add(vo);
+        }
+
+        return result;
     }
 }

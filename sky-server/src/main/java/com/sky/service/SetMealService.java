@@ -22,4 +22,6 @@ public interface SetMealService {
     void deleteSetMeals(List<Long> ids);
 
     void update(Integer status, Long id);
+
+    List<SetmealVO> getListByCategoryId(Long categoryId);
 }

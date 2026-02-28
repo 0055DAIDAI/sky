@@ -131,6 +131,11 @@ public class DishServiceImpl implements DishService {
     @Override
     public List<DishVO> getDishWithCategoryId(Long categoryId) {
         List<DishVO> dishVOList = dishMapper.getDishWithCategoryId(categoryId);
+
+        for (DishVO dishVO : dishVOList){
+            dishVO.setFlavors(dishFlavorMapper.getByDishId(dishVO.getId()));
+        }
+
         return dishVOList;
     }
 }

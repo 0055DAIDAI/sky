@@ -1,4 +1,4 @@
-package com.sky.controller.admin;
+package com.sky.controller.user;
 
 
 import com.sky.dto.DishDTO;
@@ -11,26 +11,19 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/dish")
+@RequestMapping("/user/dish")
 @Slf4j
 @Api(tags = "菜品管理")
+@Component("userDIshController")
 public class DIshController {
     @Autowired
     private DishService dishService;
-
-//    新增菜品
-    @PostMapping
-    @ApiOperation("新增菜品")
-    public Result addDish(@RequestBody DishDTO dishDTO){
-        log.info("新增菜品:{}",dishDTO);
-        dishService.saveWithFlavor(dishDTO);
-        return Result.success();
-    }
 
     @GetMapping("/page")
     @ApiOperation("分页查询")
@@ -38,16 +31,6 @@ public class DIshController {
         log.info("分页查询:{}",dishPageQueryDTO);
         PageResult pageInfo = dishService.page(dishPageQueryDTO);
         return Result.success(pageInfo);
-    }
-
-//    菜品批量删除
-
-    @DeleteMapping
-    @ApiOperation("批量删除")
-    public Result delete(@RequestParam List<Long> ids){
-        log.info("批量删除:{}",ids);
-        dishService.deleteBatch(ids);
-        return Result.success();
     }
 
     @GetMapping("/{id}")
@@ -58,19 +41,12 @@ public class DIshController {
         return Result.success(dishVO);
     }
 
-    @PutMapping
-    @ApiOperation("修改菜品")
-    public Result update(@RequestBody DishDTO dishDTO){
-        log.info("修改菜品:{}",dishDTO);
-        dishService.updateWithFlavor(dishDTO);
-        return Result.success();
-    }
-
     @GetMapping("/list")
     @ApiOperation("根据分类id查询菜品")
     public Result<List<DishVO>> list(Long categoryId){
         log.info("根据分类id查询菜品:{}",categoryId);
         List<DishVO> list = dishService.getDishWithCategoryId(categoryId);
+
         return Result.success(list);
     }
 

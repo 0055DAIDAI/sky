@@ -15,4 +15,14 @@ public interface ShoppingCartMapper {
     void updateNumberById(ShoppingCart cart);
 
     void insert(ShoppingCart shoppingCart);
+
+    void deleteByUserId(Long currentId);
+
+    ShoppingCart getByDishIdAndUserId(Long dishId,Long userId);
+
+    void deleteByUserIdAndDishId(Long userId,Long dishId);
+
+    ShoppingCart getBySetmealIdAndUserId(Long setmealId,Long userId);
+
+    void deleteByUserIdAndSetmealId(Long userId, Long setmealId);
 }

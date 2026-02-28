@@ -11,6 +11,15 @@
     <update id="updateNumberById">
         update shopping_cart set number = #{number} where id = #{id}
     </update>
+    <delete id="deleteByUserId">
+        delete from shopping_cart where user_id = #{userId}
+    </delete>
+    <delete id="deleteByUserIdAndDishId">
+        delete from shopping_cart where user_id = #{userId} and dish_id = #{dishId}
+    </delete>
+    <delete id="deleteByUserIdAndSetmealId">
+        delete from shopping_cart where user_id = #{userId} and setmeal_id = #{setmealId}
+    </delete>
 
 
     <select id="list" resultType="com.sky.entity.ShoppingCart">
@@ -29,5 +38,11 @@
                 and dish_flavor = #{dishFlavor}
             </if>
         </where>
+    </select>
+    <select id="getByDishIdAndUserId" resultType="com.sky.entity.ShoppingCart">
+        select * from shopping_cart where dish_id = #{dishId} and user_id = #{userId}
+    </select>
+    <select id="getBySetmealIdAndUserId" resultType="com.sky.entity.ShoppingCart">
+        select * from shopping_cart where setmeal_id = #{setmealId} and user_id = #{userId}
     </select>
 </mapper>

@@ -45,4 +45,15 @@
     <select id="getBySetmealIdAndUserId" resultType="com.sky.entity.ShoppingCart">
         select * from shopping_cart where setmeal_id = #{setmealId} and user_id = #{userId}
     </select>
+
+    <!-- 批量插入购物车数据 -->
+    <insert id="insertBatch">
+        insert into shopping_cart (name, image, dish_id, setmeal_id, dish_flavor, number, amount, create_time, user_id)
+        values
+        <foreach collection="list" item="shoppingCart" separator=",">
+            (#{shoppingCart.name}, #{shoppingCart.image}, #{shoppingCart.dishId}, #{shoppingCart.setmealId},
+            #{shoppingCart.dishFlavor}, #{shoppingCart.number}, #{shoppingCart.amount}, #{shoppingCart.createTime}, #{shoppingCart.userId})
+        </foreach>
+    </insert>
+
 </mapper>

@@ -25,4 +25,10 @@ public interface ShoppingCartMapper {
     ShoppingCart getBySetmealIdAndUserId(Long setmealId,Long userId);
 
     void deleteByUserIdAndSetmealId(Long userId, Long setmealId);
+
+    /**
+     * 批量插入购物车数据
+     * @param shoppingCartList
+     */
+    void insertBatch(List<ShoppingCart> shoppingCartList);
 }

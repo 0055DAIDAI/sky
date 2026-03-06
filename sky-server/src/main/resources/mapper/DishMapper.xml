@@ -69,4 +69,11 @@
         select d.*, c.name as categoryName from dish d left join category c on d.category_id = c.id
         where d.category_id = #{id}
     </select>
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from dish
+        <where>
+            <if test="status != null"> and status = #{status} </if>
+            <if test="categoryId != null"> and category_id = #{categoryId} </if>
+        </where>
+    </select>
 </mapper>

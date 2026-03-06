@@ -56,4 +56,5 @@ public interface OrderMapper {
     @MapKey("date")
     List<Map<String, Object>> countOrderByDateRangeAndStatus(LocalDate begin, LocalDate end, Integer status);
 
+    Integer countByMap(Map map);
 }

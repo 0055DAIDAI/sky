@@ -122,4 +122,15 @@
         GROUP BY DATE(order_time)
         ORDER BY DATE(order_time)
     </select>
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from orders
+        <where>
+            <if test="begin">
+                and order_time &gt;= #{begin}
+            </if>
+            <if test="end">
+                and order_time &lt;= #{end}
+            </if>
+        </where>
+    </select>
 </mapper>

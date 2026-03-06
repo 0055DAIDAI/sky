@@ -13,4 +13,17 @@
     <select id="getByOrderId" resultType="com.sky.entity.OrderDetail">
         select * from order_detail where order_id = #{orderId}
     </select>
+    <select id="getTop10" resultType="java.util.Map">
+        SELECT
+        od.name,
+        SUM(od.number) as number
+        FROM order_detail od
+        INNER JOIN orders o ON od.order_id = o.id
+        WHERE o.status = 5
+        AND o.order_time &gt;= #{begin}
+        AND o.order_time &lt;= #{end}
+        GROUP BY od.name
+        ORDER BY number DESC
+        LIMIT 10
+    </select>
 </mapper>

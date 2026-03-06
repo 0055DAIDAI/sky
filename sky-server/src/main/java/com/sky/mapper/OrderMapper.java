@@ -4,11 +4,14 @@ package com.sky.mapper;
 import com.github.pagehelper.Page;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -44,4 +47,13 @@ public interface OrderMapper {
     Integer countStatus(Integer status);
 
     List<Orders> getByStatusAndOrderTimeOut(Integer status, LocalDateTime orderTime);
+
+    Double sumByMap(Map map);
+
+    @MapKey("date")
+    List<Map<String, Object>> countOrderByDateRange(LocalDate begin, LocalDate end);
+
+    @MapKey("date")
+    List<Map<String, Object>> countOrderByDateRangeAndStatus(LocalDate begin, LocalDate end, Integer status);
+
 }

@@ -87,4 +87,39 @@
     <select id="getByStatusAndOrderTimeOut" resultType="com.sky.entity.Orders">
         select * from orders where status = #{status} and order_time &lt; #{orderTime}
     </select>
+    <select id="sumByMap" resultType="java.lang.Double">
+        select sum(amount) from orders
+        <where>
+            <if test="begin">
+                and order_time &gt;= #{begin}
+            </if>
+            <if test="end">
+                and order_time &lt;= #{end}
+            </if>
+            <if test="status">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="countOrderByDateRange" resultType="java.util.Map">
+        SELECT
+        DATE(order_time) as date,
+        COUNT(*) as orderCount
+        FROM orders
+        WHERE order_time &gt;= #{begin}
+        AND order_time &lt;= #{end}
+        GROUP BY DATE(order_time)
+        ORDER BY DATE(order_time)
+    </select>
+    <select id="countOrderByDateRangeAndStatus" resultType="java.util.Map">
+        SELECT
+        DATE(order_time) as date,
+        COUNT(*) as orderCount
+        FROM orders
+        WHERE order_time &gt;= #{begin}
+        AND order_time &lt;= #{end}
+        AND status = #{status}
+        GROUP BY DATE(order_time)
+        ORDER BY DATE(order_time)
+    </select>
 </mapper>
